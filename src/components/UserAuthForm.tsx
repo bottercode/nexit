@@ -38,7 +38,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
         size="sm"
         className="w-full"
         onClick={loginWithGoogle}
-        disabled={isLoading}
+        // disabled={isLoading}
       >
         {isLoading ? null : <Icons.google className="h-4 w-4 mr-2" />}
         Google
