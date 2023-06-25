@@ -12,7 +12,7 @@ const CloseModal: FC<CloseModalProps> = ({}) => {
 
   return (
     <Button
-      // variant="subtle"
+      variant="subtle"
       className="h-6 w-6 p-0 rounded-md"
       onClick={() => router.back()}
     >
