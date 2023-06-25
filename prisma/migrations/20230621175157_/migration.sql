@@ -1,64 +1,45 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `accessToken` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `accessTokenExpires` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `createdAt` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `providerId` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `providerType` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `refreshToken` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `updatedAt` on the `Account` table. All the data in the column will be lost.
-  - You are about to drop the column `accessToken` on the `Session` table. All the data in the column will be lost.
-  - You are about to drop the column `createdAt` on the `Session` table. All the data in the column will be lost.
-  - You are about to drop the column `updatedAt` on the `Session` table. All the data in the column will be lost.
-  - You are about to drop the column `createdAt` on the `User` table. All the data in the column will be lost.
-  - You are about to drop the column `updatedAt` on the `User` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[provider,providerAccountId]` on the table `Account` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `provider` to the `Account` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `type` to the `Account` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "VoteType" AS ENUM ('UP', 'DOWN');
 
--- DropForeignKey
-ALTER TABLE "Account" DROP CONSTRAINT "Account_userId_fkey";
+-- CreateTable
+CREATE TABLE "Account" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
 
--- DropForeignKey
-ALTER TABLE "Session" DROP CONSTRAINT "Session_userId_fkey";
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
+);
 
--- DropIndex
-DROP INDEX "Account_providerId_providerAccountId_key";
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "sessionToken" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
 
--- DropIndex
-DROP INDEX "Session_accessToken_key";
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
 
--- AlterTable
-ALTER TABLE "Account" DROP COLUMN "accessToken",
-DROP COLUMN "accessTokenExpires",
-DROP COLUMN "createdAt",
-DROP COLUMN "providerId",
-DROP COLUMN "providerType",
-DROP COLUMN "refreshToken",
-DROP COLUMN "updatedAt",
-ADD COLUMN     "access_token" TEXT,
-ADD COLUMN     "expires_at" INTEGER,
-ADD COLUMN     "id_token" TEXT,
-ADD COLUMN     "provider" TEXT NOT NULL,
-ADD COLUMN     "refresh_token" TEXT,
-ADD COLUMN     "scope" TEXT,
-ADD COLUMN     "session_state" TEXT,
-ADD COLUMN     "token_type" TEXT,
-ADD COLUMN     "type" TEXT NOT NULL;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "username" TEXT,
+    "image" TEXT,
 
--- AlterTable
-ALTER TABLE "Session" DROP COLUMN "accessToken",
-DROP COLUMN "createdAt",
-DROP COLUMN "updatedAt";
-
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "createdAt",
-DROP COLUMN "updatedAt";
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Subreddit" (
@@ -124,13 +105,22 @@ CREATE TABLE "CommentVote" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Subreddit_name_key" ON "Subreddit"("name");
 
 -- CreateIndex
 CREATE INDEX "Subreddit_name_idx" ON "Subreddit"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
