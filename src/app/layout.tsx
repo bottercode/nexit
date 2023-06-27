@@ -9,7 +9,7 @@ import Providers from "@/components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Breadit",
+  title: "nexit",
   description: "A Reddit clone built with Next.js and TypeScript.",
 };
 
