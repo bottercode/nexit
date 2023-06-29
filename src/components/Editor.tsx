@@ -35,6 +35,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
       content: null,
     },
   });
+
   const ref = useRef<EditorJS>();
   const _titleRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
