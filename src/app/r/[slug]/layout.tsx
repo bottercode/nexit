@@ -92,7 +92,13 @@ const Layout = async ({
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">You created this community</dt>
                 </div>
-              ) : null}
+              ) : (
+                <div className="flex justify-between gap-x-4 py-3">
+                  <dt className="text-gray-500">
+                    The community was created by a pro nexitor
+                  </dt>
+                </div>
+              )}
 
               {subreddit.creatorId !== session?.user?.id ? (
                 <SubscribeLeaveToggle

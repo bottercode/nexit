@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
           },
         });
       }
+      // console.log(dbUser.username);
 
       return {
         id: dbUser.id,

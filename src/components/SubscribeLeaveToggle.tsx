@@ -47,8 +47,6 @@ const SubscribeLeaveToggle = ({
     },
     onSuccess: () => {
       startTransition(() => {
-        // Refresh the current route and fetch new data from the server without
-        // losing client-side browser or React state.
         router.refresh();
       });
       toast({
@@ -76,8 +74,6 @@ const SubscribeLeaveToggle = ({
     },
     onSuccess: () => {
       startTransition(() => {
-        // Refresh the current route and fetch new data from the server without
-        // losing client-side browser or React state.
         router.refresh();
       });
       toast({
