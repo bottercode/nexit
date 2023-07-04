@@ -16,7 +16,6 @@ interface SubRedditPostPageProps {
     postId: string;
   };
 }
-// @bottercode
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
