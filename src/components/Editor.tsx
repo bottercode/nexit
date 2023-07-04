@@ -168,7 +168,6 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
 
   async function onSubmit(data: FormData) {
     const blocks = await ref.current?.save();
-
     const payload: PostCreationRequest = {
       title: data.title,
       content: blocks,
