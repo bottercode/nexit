@@ -7,7 +7,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN npx prisma migrate deploy
 RUN npx prisma generate
 RUN npm run build
-RUN mkdir -p /app/.next/cache/imagess
+RUN mkdir -p /app/.next/cache/images
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
 WORKDIR /app
