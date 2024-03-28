@@ -1,8 +1,8 @@
 import CustomFeed from '@/components/homepage/CustomFeed'
 import GeneralFeed from '@/components/homepage/GeneralFeed'
-import { buttonVariants } from '@/components/ui/Button'
-import { getAuthSession } from '@/lib/auth'
-import { Home as HomeIcon } from 'lucide-react'
+import {buttonVariants} from '@/components/ui/Button'
+import {getAuthSession} from '@/lib/auth'
+import {Home as HomeIcon} from 'lucide-react'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
@@ -38,8 +38,7 @@ export default async function Home() {
               className={buttonVariants({
                 className: 'w-full mt-4 mb-6'
               })}
-              href={`/r/create`}
-            >
+              href={`/r/create`}>
               Create Community
             </Link>
           </dl>
