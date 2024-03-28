@@ -1,4 +1,4 @@
-import { Icons } from '@/components/Icons'
+import {Icons} from '@/components/Icons'
 import UserAuthForm from '@/components/UserAuthForm'
 import Link from 'next/link'
 
@@ -15,11 +15,10 @@ const SignIn = () => {
       </div>
       <UserAuthForm />
       <p className='px-8 text-center text-sm text-muted-foreground'>
-        New to Breaddit?{' '}
+        New to Nexit?{' '}
         <Link
           href='/sign-up'
-          className='hover:text-brand text-sm underline underline-offset-4'
-        >
+          className='hover:text-brand text-sm underline underline-offset-4'>
           Sign Up
         </Link>
       </p>
