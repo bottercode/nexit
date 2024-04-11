@@ -1,17 +1,17 @@
 'use client'
 
 import EditorJS from '@editorjs/editorjs'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { usePathname, useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {usePathname, useRouter} from 'next/navigation'
+import {useCallback, useEffect, useRef, useState} from 'react'
+import {useForm} from 'react-hook-form'
 import TextareaAutosize from 'react-textarea-autosize'
-import { z } from 'zod'
+import {z} from 'zod'
 
-import { toast } from '@/hooks/use-toast'
-import { uploadFiles } from '@/lib/uploadthing'
-import { PostCreationRequest, PostValidator } from '@/lib/validators/post'
-import { useMutation } from '@tanstack/react-query'
+import {toast} from '@/hooks/use-toast'
+import {uploadFiles} from '@/lib/uploadthing'
+import {PostCreationRequest, PostValidator} from '@/lib/validators/post'
+import {useMutation} from '@tanstack/react-query'
 import axios from 'axios'
 
 import '@/styles/editor.css'
@@ -22,18 +22,18 @@ interface EditorProps {
   subredditId: string
 }
 
-export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
+export const Editor: React.FC<EditorProps> = ({subredditId}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors}
   } = useForm<FormData>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
       subredditId,
       title: '',
-      content: null,
-    },
+      content: null
+    }
   })
   const ref = useRef<EditorJS>()
   const _titleRef = useRef<HTMLTextAreaElement>(null)
@@ -41,21 +41,17 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const pathname = usePathname()
 
-  const { mutate: createPost } = useMutation({
-    mutationFn: async ({
-      title,
-      content,
-      subredditId,
-    }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content, subredditId }
-      const { data } = await axios.post('/api/subreddit/post/create', payload)
+  const {mutate: createPost} = useMutation({
+    mutationFn: async ({title, content, subredditId}: PostCreationRequest) => {
+      const payload: PostCreationRequest = {title, content, subredditId}
+      const {data} = await axios.post('/api/subreddit/post/create', payload)
       return data
     },
     onError: () => {
       return toast({
         title: 'Something went wrong.',
         description: 'Your post was not published. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       })
     },
     onSuccess: () => {
@@ -66,9 +62,9 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
       router.refresh()
 
       return toast({
-        description: 'Your post has been published.',
+        description: 'Your post has been published.'
       })
-    },
+    }
   })
 
   const initializeEditor = useCallback(async () => {
@@ -90,14 +86,14 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
         },
         placeholder: 'Type here to write your post...',
         inlineToolbar: true,
-        data: { blocks: [] },
+        data: {blocks: []},
         tools: {
           header: Header,
           linkTool: {
             class: LinkTool,
             config: {
-              endpoint: '/api/link',
-            },
+              endpoint: '/api/link'
+            }
           },
           image: {
             class: ImageTool,
@@ -110,19 +106,19 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
                   return {
                     success: 1,
                     file: {
-                      url: res.fileUrl,
-                    },
+                      url: res.fileUrl
+                    }
                   }
-                },
-              },
-            },
+                }
+              }
+            }
           },
           list: List,
           code: Code,
           inlineCode: InlineCode,
           table: Table,
-          embed: Embed,
-        },
+          embed: Embed
+        }
       })
     }
   }, [])
@@ -133,8 +129,8 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
         value
         toast({
           title: 'Something went wrong.',
-          description: (value as { message: string }).message,
-          variant: 'destructive',
+          description: (value as {message: string}).message,
+          variant: 'destructive'
         })
       }
     }
@@ -171,7 +167,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
     const payload: PostCreationRequest = {
       title: data.title,
       content: blocks,
-      subredditId,
+      subredditId
     }
 
     createPost(payload)
@@ -181,7 +177,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
     return null
   }
 
-  const { ref: titleRef, ...rest } = register('title')
+  const {ref: titleRef, ...rest} = register('title')
 
   return (
     <div className='w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200'>
@@ -191,7 +187,7 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
         onSubmit={handleSubmit(onSubmit)}>
         <div className='prose prose-stone dark:prose-invert'>
           <TextareaAutosize
-            ref={(e) => {
+            ref={e => {
               titleRef(e)
               // @ts-ignore
               _titleRef.current = e
