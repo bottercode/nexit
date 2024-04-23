@@ -1,26 +1,25 @@
-import {db} from '@/lib/db'
-import {PrismaAdapter} from '@next-auth/prisma-adapter'
-import {nanoid} from 'nanoid'
-import {NextAuthOptions, getServerSession} from 'next-auth'
+import { db } from '@/lib/db'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { nanoid } from 'nanoid'
+import { NextAuthOptions, getServerSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
   },
   pages: {
-    signIn: '/sign-in'
+    signIn: '/sign-in',
   },
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
-    })
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
   callbacks: {
-    async session({token, session}) {
+    async session({ token, session }) {
       if (token) {
         session.user.id = token.id
         session.user.name = token.name
@@ -32,11 +31,11 @@ export const authOptions: NextAuthOptions = {
       return session
     },
 
-    async jwt({token, user}) {
+    async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email
-        }
+          email: token.email,
+        },
       })
 
       if (!dbUser) {
@@ -47,11 +46,11 @@ export const authOptions: NextAuthOptions = {
       if (!dbUser.username) {
         await db.user.update({
           where: {
-            id: dbUser.id
+            id: dbUser.id,
           },
           data: {
-            username: nanoid(10)
-          }
+            username: nanoid(10),
+          },
         })
       }
 
@@ -60,13 +59,13 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
-        username: dbUser.username
+        username: dbUser.username,
       }
     },
     redirect() {
       return '/'
-    }
-  }
+    },
+  },
 }
 
 export const getAuthSession = () => getServerSession(authOptions)

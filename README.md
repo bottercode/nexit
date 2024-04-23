@@ -1,26 +1,29 @@
-# Nexit
+
+# Breadit - A Modern Fullstack Reddit Clone 
 
 Built with the Next.js App Router, TypeScript & Tailwind
 
+
 ## Features
 
-- Infinite scrolling for dynamically loading posts
-- Authentication using NextAuth & Google
-- Custom feed for authenticated users
-- Advanced caching using [Upstash Redis]
-- Optimistic updates for a great user experience
-- Modern data fetching using React-Query
-- A beautiful and highly functional post editor
-- Image uploads & link previews
-- Full comment functionality with nested replies
-- ... and much more
+ - Infinite scrolling for dynamically loading posts
+ - Authentication using NextAuth & Google
+ - Custom feed for authenticated users
+ - Advanced caching using [Upstash Redis](https://upstash.com/?utm_source=Josh2)
+ - Optimistic updates for a great user experience
+ - Modern data fetching using React-Query
+ - A beautiful and highly functional post editor
+ - Image uploads & link previews
+ - Full comment functionality with nested replies
+ - ... and much more
+
 
 ## Getting started
 
 To get started with this project, run
 
 ```bash
-  git clone -b starter-code https://github.com/bottercode/nexit.git
+  git clone -b starter-code https://github.com/joschan21/breadit.git
 ```
 
 and copy these .env.example variables into a separate .env file:
@@ -40,7 +43,6 @@ REDIS_SECRET=
 ```
 
 if you'd like, you can paste this snippet for quick component creation (optional):
-
 ```typescript
 // vscode settings -> user snippets -> typescriptreact.json
 ```
@@ -63,9 +65,16 @@ if you'd like, you can paste this snippet for quick component creation (optional
     ],
     "description": "Typescript React Function Component"
   },
-```
+  ```
 
 and that's all you need to get started!
+
+
+## Acknowledgements
+
+- [Upstash Redis](https://upstash.com/?utm_source=Josh2) for making this possible
+- [Code with Antonio](https://www.youtube.com/@codewithantonio) for thumbnail design inspiration
+- Shadcn's [Taxonomy respository](https://github.com/shadcn/taxonomy) for showcasing the post editor
 
 ## License
 
