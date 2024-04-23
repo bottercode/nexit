@@ -100,13 +100,11 @@ export const Editor: React.FC<EditorProps> = ({subredditId}) => {
             config: {
               uploader: {
                 async uploadByFile(file: File) {
-                  const res = await uploadFiles('imageUploader', {
-                    files: [file]
-                  })
+                  const [res] = await uploadFiles([file], 'imageUploader')
                   return {
                     success: 1,
                     file: {
-                      url: res[0].url
+                      url: res.fileUrl
                     }
                   }
                 }
