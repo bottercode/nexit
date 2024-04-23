@@ -1,38 +1,38 @@
 import SubscribeLeaveToggle from '@/components/SubscribeLeaveToggle'
 import ToFeedButton from '@/components/ToFeedButton'
-import { buttonVariants } from '@/components/ui/Button'
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { format } from 'date-fns'
-import type { Metadata } from 'next'
+import {buttonVariants} from '@/components/ui/Button'
+import {getAuthSession} from '@/lib/auth'
+import {db} from '@/lib/db'
+import {format} from 'date-fns'
+import type {Metadata} from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { ReactNode } from 'react'
+import {notFound} from 'next/navigation'
+import {ReactNode} from 'react'
 
 export const metadata: Metadata = {
-  title: 'Breadit',
-  description: 'A Reddit clone built with Next.js and TypeScript.',
+  title: 'Nexit',
+  description: 'A Modern Social Media Platform.'
 }
 
 const Layout = async ({
   children,
-  params: { slug },
+  params: {slug}
 }: {
   children: ReactNode
-  params: { slug: string }
+  params: {slug: string}
 }) => {
   const session = await getAuthSession()
 
   const subreddit = await db.subreddit.findFirst({
-    where: { name: slug },
+    where: {name: slug},
     include: {
       posts: {
         include: {
           author: true,
-          votes: true,
-        },
-      },
-    },
+          votes: true
+        }
+      }
+    }
   })
 
   const subscription = !session?.user
@@ -40,12 +40,12 @@ const Layout = async ({
     : await db.subscription.findFirst({
         where: {
           subreddit: {
-            name: slug,
+            name: slug
           },
           user: {
-            id: session.user.id,
-          },
-        },
+            id: session.user.id
+          }
+        }
       })
 
   const isSubscribed = !!subscription
@@ -55,9 +55,9 @@ const Layout = async ({
   const memberCount = await db.subscription.count({
     where: {
       subreddit: {
-        name: slug,
-      },
-    },
+        name: slug
+      }
+    }
   })
 
   return (
@@ -104,7 +104,7 @@ const Layout = async ({
               <Link
                 className={buttonVariants({
                   variant: 'outline',
-                  className: 'w-full mb-6',
+                  className: 'w-full mb-6'
                 })}
                 href={`r/${slug}/submit`}>
                 Create Post

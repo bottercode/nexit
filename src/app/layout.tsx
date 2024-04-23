@@ -1,21 +1,21 @@
 import Navbar from '@/components/Navbar'
-import { cn } from '@/lib/utils'
-import { Inter } from 'next/font/google'
+import {cn} from '@/lib/utils'
+import {Inter} from 'next/font/google'
 import Providers from '@/components/Providers'
-import { Toaster } from '@/components/ui/Toaster'
+import {Toaster} from '@/components/ui/Toaster'
 
 import '@/styles/globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({subsets: ['latin']})
 
 export const metadata = {
-  title: 'Breadit',
-  description: 'A Reddit clone built with Next.js and TypeScript.',
+  title: 'Nexit',
+  description: 'A Modern Modern Social Media Platform.'
 }
 
 export default function RootLayout({
   children,
-  authModal,
+  authModal
 }: {
   children: React.ReactNode
   authModal: React.ReactNode
