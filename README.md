@@ -1,6 +1,6 @@
 # Nexit - A Modern Social Media Platform
 
-Built with the Next.js App Router, TypeScript & Tailwind
+Built with the Next.js App Router, TypeScript & Tailwind CSS
 
 ## Features
 
