@@ -13,6 +13,7 @@ Built with the Next.js App Router, TypeScript & Tailwind CSS
 - A beautiful and highly functional post editor
 - Image uploads & link previews
 - Full comment functionality with nested replies
+- Content sharing
 - ... and much more
 
 ## License
